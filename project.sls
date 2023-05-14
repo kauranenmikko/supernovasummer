@@ -1,4 +1,5 @@
 {% if grains.os_family == 'Debian' %}
+
 dpkg --add-architecture i386:
   cmd.run:
     - unless: "dpkg --print-foreign-architectures | grep 'i386'"
@@ -74,11 +75,13 @@ PolicyChanges:
         Allow telemetry: Disabled
         Disable OneSettings Downloads: Enabled
         Do not show feedback notifications: Enabled
+        Turn off hybrid sleep (plugged in): Enabled
+        Turn off the advertising ID: Enabled
 
-HKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\Session Manager\\Power:
+HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Session Manager\Power:
   reg.present:
-    - name: HiberbootEnabled
+    - vname: HiberbootEnabled
     - vtype: REG_DWORD
     - vdata: 0
-        
+    
 {% endif %}
