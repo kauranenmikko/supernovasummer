@@ -10,7 +10,6 @@ apt-get update && apt-get install wine32:
 
 packages_required:
   pkg.installed:
-    
       - pkgs:
         - blender
         - ufw
@@ -52,7 +51,34 @@ ufw enable:
 packages.required:
   pkg.installed:
     - pkgs:
-      - micro
       - blender
+      - 7zip
+      - firefox
+      - git
+      - putty
 
+winget install Notepad++.Notepad++:
+  cmd.run:
+
+PolicyChanges:
+  lgpo.set:
+    - computer_policy:
+        Do not show Windows tips: Enabled
+        Deny log on locally:
+          - Guest
+        Turn off cloud optimized content: Enabled
+        Do not include drivers with Windows Updates: Enabled
+        Allow the use of biometrics: Disabled
+        Minimum password length: 12
+        Store passwords using reversible encryption: Disabled
+        Allow telemetry: Disabled
+        Disable OneSettings Downloads: Enabled
+        Do not show feedback notifications: Enabled
+
+HKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\Session Manager\\Power:
+  reg.present:
+    - name: HiberbootEnabled
+    - vtype: REG_DWORD
+    - vdata: 0
+        
 {% endif %}
