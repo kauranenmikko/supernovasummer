@@ -59,7 +59,7 @@ packages.required:
       - putty
 
 winget install Notepad++.Notepad++:
-  cmd.run:
+  cmd.run
 
 PolicyChanges:
   lgpo.set:
@@ -83,5 +83,9 @@ HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Session Manager\Power:
     - vname: HiberbootEnabled
     - vtype: REG_DWORD
     - vdata: 0
-    
+
+C:\Windows\System32\drivers\etc\hosts:
+  file.managed:
+    - source: salt://hosts
+
 {% endif %}
