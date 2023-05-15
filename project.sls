@@ -47,6 +47,7 @@ ufw enable:
   cmd.run:
     - unless: "ufw status | grep 'Status: active'"
 
+# Start of Windows section. Does not check for windows version. Tested on W10 & W11
 {% elif grains.os_family == 'Windows' %}
 
 packages.required:
@@ -57,14 +58,31 @@ packages.required:
       - git
       - putty
 
-#winget install Notepad++.Notepad++:
-#  cmd.run
-'Notepad++.Notepad++','GIMP.GIMP','Mozilla.Firefox','Discord.Discord', 'GOG.Galaxy' | ForEach-Object { winget install $_ }:
+# The actual solution to below mess would be to pass each package as a string or object to winget un/install, or toss it all in a seperate shell file 
+
+winget install Notepad++.Notepad++:
   cmd.run
 
-'Clipchamp', 'Cortana', 'Windows Maps' | ForEach-Object { winget uninstall $_ }:
+winget install GIMP.GIMP:
   cmd.run
 
+winget install Mozilla.Firefox:
+  cmd.run
+
+winget install Discord.Discord:
+  cmd.run
+
+winget install GOG.Galaxy:
+  cmd.run
+
+winget uninstall Clipchamp:
+  cmd.run
+
+winget uninstall Cortana:
+  cmd.run
+
+winget uninstall Windows Maps:
+  cmd.run
 
 PolicyChanges:
   lgpo.set:
@@ -77,7 +95,6 @@ PolicyChanges:
         Allow the use of biometrics: Disabled
         Minimum password length: 12
         Store passwords using reversible encryption: Disabled
-        Allow telemetry: Disabled
         Disable OneSettings Downloads: Enabled
         Do not show feedback notifications: Enabled
         Turn off hybrid sleep (plugged in): Enabled
