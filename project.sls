@@ -54,12 +54,17 @@ packages.required:
     - pkgs:
       - blender
       - 7zip
-      - firefox
       - git
       - putty
 
-winget install Notepad++.Notepad++:
+#winget install Notepad++.Notepad++:
+#  cmd.run
+'Notepad++.Notepad++','GIMP.GIMP','Mozilla.Firefox','Discord.Discord', 'GOG.Galaxy' | ForEach-Object { winget install $_ }:
   cmd.run
+
+'Clipchamp', 'Cortana', 'Windows Maps' | ForEach-Object { winget uninstall $_ }:
+  cmd.run
+
 
 PolicyChanges:
   lgpo.set:
@@ -86,6 +91,6 @@ HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Session Manager\Power:
 
 C:\Windows\System32\drivers\etc\hosts:
   file.managed:
-    - source: salt://hosts
+    - source: salt://PCSetupProject/hosts
 
 {% endif %}
