@@ -58,30 +58,31 @@ packages.required:
       - git
       - putty
 
-# The actual solution to below mess would be to pass each package as a string or object to winget un/install, or toss it all in a seperate shell file 
+# The actual solution to below mess would be to pass each package as a string/object to winget un/install, or toss it all in a seperate shell file
+# Also for some reason && chaining of commands doesn't seem to work in PowerShell
 
-winget install Notepad++.Notepad++:
+winget install "Notepad++.Notepad++"":
   cmd.run
 
-winget install GIMP.GIMP:
+winget install "GIMP.GIMP":
   cmd.run
 
-winget install Mozilla.Firefox:
+winget install "Mozilla.Firefox":
   cmd.run
 
-winget install Discord.Discord:
+winget install "Discord.Discord":
   cmd.run
 
-winget install GOG.Galaxy:
+winget install "GOG.Galaxy":
   cmd.run
 
-winget uninstall Clipchamp:
+winget uninstall "Clipchamp":
   cmd.run
 
-winget uninstall Cortana:
+winget uninstall "Cortana":
   cmd.run
 
-winget uninstall Windows Maps:
+winget uninstall "Windows Maps":
   cmd.run
 
 PolicyChanges:
@@ -105,6 +106,8 @@ HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Session Manager\Power:
     - vname: HiberbootEnabled
     - vtype: REG_DWORD
     - vdata: 0
+    
+# Host file contents from https://winhelp2002.mvps.org/hosts.txt 
 
 C:\Windows\System32\drivers\etc\hosts:
   file.managed:
